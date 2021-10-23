@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import * as fetchMovie from "../services/themoviedb-api";
+import { NavLink, useRouteMatch } from "react-router-dom";
+import * as fetchMovie from "../../services/themoviedb-api";
 
-export default function MovieDetailsView() {
-  const { movieId } = useParams();
-
+export default function MovieDetails({ movieId }) {
+  const { url } = useRouteMatch();
   const [movie, setMovie] = useState(null);
 
   useEffect(() => {
@@ -12,10 +11,10 @@ export default function MovieDetailsView() {
   }, [movieId]);
 
   return (
-    <>
+    <div>
       {movie && (
         <>
-          {console.log(movie)}
+          <button style={{ display: "block" }}>Go back</button>
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
             alt={movie.title}
@@ -30,8 +29,20 @@ export default function MovieDetailsView() {
                 : "not genres"}
             </ul>
           </div>
+
+          <div>
+            Additional information
+            <ul>
+              <li>
+                <NavLink to={`${url}/cast`}>Cast</NavLink>
+              </li>
+              <li>
+                <NavLink to={`${url}/reviews`}>Reviews</NavLink>
+              </li>
+            </ul>
+          </div>
         </>
       )}
-    </>
+    </div>
   );
 }
