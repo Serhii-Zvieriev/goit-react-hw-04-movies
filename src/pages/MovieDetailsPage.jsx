@@ -1,4 +1,4 @@
-import { useRouteMatch, Route, useParams } from "react-router-dom";
+import { useRouteMatch, Route, useParams, Switch } from "react-router-dom";
 
 import MovieDetails from "../components/MovieDetails/MovieDetails";
 import Cast from "../components/Cast/Cast";
@@ -12,12 +12,14 @@ export default function MovieDetailsPage() {
     <>
       <MovieDetails movieId={movieId} />
 
-      <Route path={`${url}/cast`} exact>
-        <Cast movieId={movieId} />
-      </Route>
-      <Route path={`${url}/reviews`} exact>
-        <Reviews movieId={movieId} />
-      </Route>
+      <Switch>
+        <Route path={`${url}/cast`} exact>
+          <Cast movieId={movieId} />
+        </Route>
+        <Route path={`${url}/reviews`} exact>
+          <Reviews movieId={movieId} />
+        </Route>
+      </Switch>
     </>
   );
 }
